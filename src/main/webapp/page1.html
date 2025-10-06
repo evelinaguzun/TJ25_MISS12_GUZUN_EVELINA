@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Pagina unu</title>
+    <meta charset="UTF-8">
+    <title>Page 1 - Welcome</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px 60px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.1em;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #fff;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        a:hover {
+            background: rgba(255,255,255,0.4);
+        }
+    </style>
 </head>
 <body>
-
+<div class="container">
+    <h1>Welcome to Page 1</h1>
+    <p>This is the first page.</p>
+    <a href="index.jsp">Back to Home</a>
+</div>
 </body>
 </html>

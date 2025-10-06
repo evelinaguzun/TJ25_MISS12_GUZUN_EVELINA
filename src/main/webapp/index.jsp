@@ -6,9 +6,9 @@
     <title>Welcome Page</title>
 </head>
 <body>
-    <h1>Bine ai venit!</h1>
+    <h1>Welcome</h1>
     <form action="controller" method="get">
-        <label>Selectează pagina:</label>
+        <label>Select your destination:</label>
         <select name="page">
             <option value="1">Page 1</option>
             <option value="2">Page 2</option>
