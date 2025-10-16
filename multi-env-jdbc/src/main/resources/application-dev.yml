@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+app:
+  datasource:
+    host: localhost
+    port: 5432
+    name: devdb
+    username: devuser
+    password: devpass
+    useCloudDb: false

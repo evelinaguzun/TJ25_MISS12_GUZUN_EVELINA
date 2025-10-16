@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+app:
+  datasource:
+    host: prod-db.example.com
+    port: 5432
+    name: proddb
+    username: produser
+    password: prodpass
+    useCloudDb: true
