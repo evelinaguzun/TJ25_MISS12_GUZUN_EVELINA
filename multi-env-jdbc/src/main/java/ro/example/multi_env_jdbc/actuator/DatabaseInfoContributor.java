@@ -3,7 +3,7 @@ package ro.example.multi_env_jdbc.actuator;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.stereotype.Component;
-import ro.example.multienvjdbc.config.DatabaseProperties;
+import ro.example.multi_env_jdbc.config.DatabaseProperties;
 
 @Component
 public class DatabaseInfoContributor implements InfoContributor {

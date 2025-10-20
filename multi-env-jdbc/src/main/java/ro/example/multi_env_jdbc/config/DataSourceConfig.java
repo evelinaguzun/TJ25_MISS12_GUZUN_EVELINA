@@ -29,6 +29,7 @@ public class DataSourceConfig {
     }
 
     @Bean
+    @Profile("dev")
     @ConditionalOnExpression("${app.datasource.useCloudDb:false} == false")
     public DataSource defaultDataSource(DatabaseProperties props) {
         System.out.println(">>> Using DEFAULT DataSource");
