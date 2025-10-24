@@ -1,4 +1,4 @@
-# Spring Boot app-LAB2-Homework
+# Spring Boot app-Lab 2-Homework
 
 Această aplicație **Spring Boot** demonstrează cum se poate configura o conexiune la baze de date diferite (de exemplu *development* și *production*) folosind **Spring Profiles**.  
 Aplicația detectează automat profilul activ și se conectează la baza de date potrivită, apoi afișează datele dintr-un tabel la pornire.
@@ -84,11 +84,8 @@ public void run(String... args) {
 ```
 Dacă aplicația se conectează corect, în consolă apare ceva de genul:
 
-```pgsql
->>> Using DEFAULT DataSource
-=== Starting DB check ===
-Row: {key=version, value=1.0}
-```
+<img width="1920" height="1027" alt="image" src="https://github.com/user-attachments/assets/c0a3335c-5e79-489b-9bd4-b6f9a0c58a63" />
+
 ## Schimbarea mediului
 Profilul activ se poate schimba din linia de comandă sau din IntelliJ, la **Program arguments**:
 
@@ -99,17 +96,10 @@ Aceasta demonstrează și faptul că argumentele din linia de comandă suprascri
 
 Dacă accesăm http://localhost:8080/actuator/info ar trebui să vedem:
 
-```json
-{
-  "database": {
-    "name": "devdb",
-    "host": "localhost",
-    "port": 5432,
-    "useCloudDb": false,
-    "username": "cliuser"
-  }
-}
-```
+<img width="1920" height="566" alt="image" src="https://github.com/user-attachments/assets/23c0ebf4-2833-459a-9740-7c99e503ecc7" />
+
+<img width="1920" height="557" alt="image" src="https://github.com/user-attachments/assets/2b9cd2f7-9870-48e2-b266-492b0408ef00" />
+
 ## Docker
 Pentru mediul de dezvoltare, am folosit un container PostgreSQL pornit prin **docker-compose**:
 
