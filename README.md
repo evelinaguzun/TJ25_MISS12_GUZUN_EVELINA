@@ -1,28 +1,28 @@
-# Lab 4-Compulsory
+# Lab 5-Compulsory(continuare Lab4)
 
-## Funcționalitate
-Aplicația pornește cu un **CommandLineRunner** care:
-- creează și salvează un student, instructor, pachet și curs în baza de date;  
-- afișează în consolă mesajele de confirmare;  
-- datele pot fi verificate ulterior în pgAdmin.
-
+## Funcționalități noi
+- un nou pachet controller/
+- clasa StudentController.java care expune endpoint-uri **REST**
+- testarea completă a operațiilor CRUD cu **curl**
+- configurare automată Spring Boot (port 8080)
+- date generate automat cu Faker, ca și în Lab 4
 ---
 
-## Structura pe scurt
-- `entity/` – clasele care mapează tabelele SQL (`Student`, `Instructor`, `Pack`, `Course`)
-- `repository/` – interfețele pentru accesul la date  
-- `Lab4Application.java` – conține logica de test cu `CommandLineRunner`  
-- `application.properties` – setările de conexiune la PostgreSQL  
+## Testarea API-ului cu cURL
 
----
+### Afișează toți studenții (GET)
+<img width="1920" height="1029" alt="image" src="https://github.com/user-attachments/assets/259b98c9-4b64-4cb5-afb4-403071749b59" />
 
-## Exemple
+### Adaugă un student nou (POST)
+<img width="1920" height="465" alt="image" src="https://github.com/user-attachments/assets/40500bdd-a300-48d7-9212-f281e0910a6c" />
 
-**Rezultat consolă**
-<img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/4391ef3f-cc76-4071-91a3-90eb04789959" />
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/d45f70a2-fdff-41e7-a437-e559173a4e70" />
 
-**pgAdmin:**
-<img width="1916" height="1031" alt="image" src="https://github.com/user-attachments/assets/710d694d-a584-4b33-be51-0699f5eb3b72" />
-<img width="1920" height="1030" alt="image" src="https://github.com/user-attachments/assets/a13c444c-5930-467c-9d8f-bd253a49bfe9" />
-<img width="1920" height="1030" alt="image" src="https://github.com/user-attachments/assets/3f4423fc-d62a-4e5f-bb62-6670a42e9381" />
-<img width="1920" height="1029" alt="image" src="https://github.com/user-attachments/assets/092847df-9390-477f-97a0-2409dbde8500" />
+### Actualizează un student existent (PUT)
+<img width="1920" height="427" alt="image" src="https://github.com/user-attachments/assets/c2471a4c-50a3-4896-84de-834af5849f9d" />
+<img width="1920" height="1033" alt="image" src="https://github.com/user-attachments/assets/d108bfe5-0571-4db9-a40e-580fd5ed5aa3" />
+
+### Șterge un student (DELETE)
+<img width="1920" height="135" alt="image" src="https://github.com/user-attachments/assets/aaea3bf0-9878-4bde-944c-1c23e7ab5100" />
+<img width="1919" height="1029" alt="image" src="https://github.com/user-attachments/assets/c77cdf45-136e-4db8-b5e1-bca67a244d7b" />
+
