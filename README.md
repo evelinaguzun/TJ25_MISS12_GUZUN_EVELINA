@@ -1,6 +1,35 @@
-# Lab 4-Compulsory
+# Lab 4-Compulsory+Homework(updated)
 
-## Funcționalitate
+## Homework
+
+### Funcționalitate adăugată
+Proiectul a fost extins cu următoarele:
+- completarea entităților cu relații JPA (`@OneToMany`, `@ManyToOne`);
+- crearea repository-urilor pentru toate entitățile (`Student`, `Instructor`, `Pack`, `Course`);
+- adăugarea de query-uri personalizate:
+  - `findByYear(int year)`
+  - `findByEmailDomain(String domain)` – JPQL
+  - `deleteByCode(String code)` – query tranzacțional
+- popularea automată a bazei de date cu **Java Faker**;
+- implementarea și testarea completă a operațiilor **CRUD** pentru `Course`.
+
+---
+
+### Exemple
+
+**Rezultat consolă**
+<img width="1920" height="1033" alt="image" src="https://github.com/user-attachments/assets/148b9ee9-b109-423d-892c-3d564b27143c" />
+
+**pgAdmin**
+<img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/2cdb3e9f-fde9-43b7-9c26-9cd0bac87487" />
+
+<img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/1feef688-c9bb-4607-a016-eb714cbd7cf2" />
+
+---
+
+## Compulsory
+
+### Funcționalitate
 Aplicația pornește cu un **CommandLineRunner** care:
 - creează și salvează un student, instructor, pachet și curs în baza de date;  
 - afișează în consolă mesajele de confirmare;  
@@ -8,7 +37,7 @@ Aplicația pornește cu un **CommandLineRunner** care:
 
 ---
 
-## Structura pe scurt
+### Structura pe scurt
 - `entity/` – clasele care mapează tabelele SQL (`Student`, `Instructor`, `Pack`, `Course`)
 - `repository/` – interfețele pentru accesul la date  
 - `Lab4Application.java` – conține logica de test cu `CommandLineRunner`  
@@ -16,7 +45,7 @@ Aplicația pornește cu un **CommandLineRunner** care:
 
 ---
 
-## Exemple
+### Exemple
 
 **Rezultat consolă**
 <img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/4391ef3f-cc76-4071-91a3-90eb04789959" />
