@@ -10,24 +10,26 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type; // compulsory sau optional
+    private String type;
     private String code;
     private String abbr;
     private String name;
     private int groupCount;
     private String description;
 
-    // relații
+    // Relația cu instructorul (multe cursuri → un instructor)
     @ManyToOne
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 
+    // Relația cu pachetul (multe cursuri → un pack)
     @ManyToOne
     @JoinColumn(name = "pack_id")
     private Pack pack;
 
-    // --- Getteri și Setteri ---
+    // Getteri și setteri
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
@@ -53,3 +55,4 @@ public class Course {
     public Pack getPack() { return pack; }
     public void setPack(Pack pack) { this.pack = pack; }
 }
+
