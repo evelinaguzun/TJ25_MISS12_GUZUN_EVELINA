@@ -1,17 +1,19 @@
-# Lab 5-Compulsory + Homework
+# Lab 5-Compulsory + Homework (extindere Lab4)
 
 ## Homework 
---- 
+
 ## Funcționalități implementate:
-- Gestionarea preferințelor studenților (CRUD complet)
-- DTO-uri și validare
-- Excepții personalizate
-- ETag și suport JSON/XML
-- Documentare automată cu Swagger
-Toate funcționalitățile au fost testate cu succes, atât prin PowerShell, cât și în pgAdmin.
+- Extinderea modelului de domeniu prin entitatea StudentPreference (legătură între Student și Course);
+- Implementarea completă a operațiilor CRUD pentru StudentPreference;
+- Utilizarea DTO-urilor și a Bean Validation pentru validarea datelor de intrare;
+- Implementarea unei excepții personalizate (ResourceNotFoundException) și gestionarea globală în GlobalExceptionHandler;
+- Adăugarea de conditional requests folosind ETag și antetul If-None-Match;
+- Suport pentru content negotiation (JSON/XML);
+- Documentarea API-ului cu Springdoc OpenAPI (Swagger UI) pentru testare vizuală a endpoint-urilor.
 ---
 ### Afișarea preferințelor (GET)
 <img width="1920" height="589" alt="image" src="https://github.com/user-attachments/assets/5c10f83f-ac0a-40c5-befa-30925bc67684" />
+La prima rulare, lista este goală, deoarece nu a fost adăugată încă nicio preferință în baza de date.
 
 ### Adăugarea unei preferințe noi (POST)
 <img width="1920" height="1027" alt="image" src="https://github.com/user-attachments/assets/eb361bd6-0b22-45f7-9778-0cc2a88e711b" />
@@ -32,6 +34,13 @@ Aici, studentul cu ID 2 a ales cursul cu ID 3, având ordinea de preferință 1.
 ### Content ngotiation (JSON/XML)
 <img width="1920" height="124" alt="image" src="https://github.com/user-attachments/assets/fcf62819-05a6-4f6f-9f57-bdd6ee7114a3" />
 Endpointul suportă content negotiation, același URL poate returna datele fie în format JSON, fie în XML, în funcție de antetul Accept.
+
+### Documentarea cu Swagger 
+Interfața vizuală Swagger poate fi accesată la:
+http://localhost:8080/swagger-ui/index.html
+<img width="1920" height="970" alt="image" src="https://github.com/user-attachments/assets/bb6d0c45-1235-4e90-9334-d1166ba58ea0" />
+<img width="1920" height="975" alt="image" src="https://github.com/user-attachments/assets/cb3357c1-f1fa-4dc8-9a34-5fc506eba40d" />
+
 
 Compulsory
 ---
