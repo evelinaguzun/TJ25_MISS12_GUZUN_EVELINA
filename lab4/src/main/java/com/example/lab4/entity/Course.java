@@ -1,6 +1,8 @@
 package com.example.lab4.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -20,14 +22,21 @@ public class Course {
     // Relația cu instructorul (multe cursuri → un instructor)
     @ManyToOne
     @JoinColumn(name = "instructor_id")
+    @JsonIgnoreProperties("courses")
     private Instructor instructor;
 
     // Relația cu pachetul (multe cursuri → un pack)
     @ManyToOne
     @JoinColumn(name = "pack_id")
+    @JsonIgnoreProperties("courses")
     private Pack pack;
 
-    // Getteri și setteri
+    // Relația cu preferințele studenților
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("course")
+    private List<StudentPreference> preferences;
+
+    // --- Getteri și setteri ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -54,5 +63,8 @@ public class Course {
 
     public Pack getPack() { return pack; }
     public void setPack(Pack pack) { this.pack = pack; }
+
+    public List<StudentPreference> getPreferences() { return preferences; }
+    public void setPreferences(List<StudentPreference> preferences) { this.preferences = preferences; }
 }
 
