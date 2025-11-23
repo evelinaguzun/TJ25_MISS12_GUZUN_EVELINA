@@ -6,8 +6,8 @@ import com.example.lab4.exception.ResourceNotFoundException;
 import com.example.lab4.repository.*;
 import jakarta.validation.Valid;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -26,7 +26,7 @@ public class StudentPreferenceController {
         this.courseRepo = courseRepo;
     }
 
-    // ✅ READ ALL (cu ETag + JSON/XML)
+    // 🔹 GET → public (oricine autenticat poate vedea)
     @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public ResponseEntity<List<StudentPreference>> getAll(@RequestHeader(value = "If-None-Match", required = false) String ifNoneMatch) {
         List<StudentPreference> prefs = prefRepo.findAll();
@@ -41,7 +41,8 @@ public class StudentPreferenceController {
                 .body(prefs);
     }
 
-    // ✅ CREATE
+    // 🔒 CREATE → doar ADMIN sau STUDENT
+    @PreAuthorize("hasAnyRole('ADMIN','STUDENT')")
     @PostMapping
     public ResponseEntity<StudentPreference> addPreference(@Valid @RequestBody StudentPreferenceDTO dto) {
         Student student = studentRepo.findById(dto.getStudentId())
@@ -58,7 +59,8 @@ public class StudentPreferenceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    // ✅ UPDATE
+    // 🔒 UPDATE → doar ADMIN
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<StudentPreference> updatePreference(@PathVariable Long id,
                                                               @Valid @RequestBody StudentPreferenceDTO dto) {
@@ -78,7 +80,8 @@ public class StudentPreferenceController {
         return ResponseEntity.ok(updated);
     }
 
-    // ✅ DELETE
+    // 🔒 DELETE → doar ADMIN
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePreference(@PathVariable Long id) {
         StudentPreference existing = prefRepo.findById(id)
