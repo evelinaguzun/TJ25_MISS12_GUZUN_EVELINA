@@ -3,6 +3,7 @@ package com.example.lab4;
 import com.example.lab4.entity.*;
 import com.example.lab4.repository.*;
 import net.datafaker.Faker;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
+@EnableRabbit
 public class Lab4Application {
 
     public static void main(String[] args) {
@@ -90,7 +92,9 @@ public class Lab4Application {
             // --- READ ---
             System.out.println("\n READ: Lista cursurilor existente în DB:");
             List<Course> courses = courseRepo.findAll();
-            courses.forEach(c -> System.out.println(" - " + c.getName() + " (" + c.getCode() + ")"));
+            courses.forEach(c ->
+                    System.out.println(" - " + c.getName() + " (" + c.getCode() + ")")
+            );
 
             // --- UPDATE ---
             if (!courses.isEmpty()) {
