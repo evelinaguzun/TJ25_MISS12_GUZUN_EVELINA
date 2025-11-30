@@ -1,52 +1,52 @@
-# Lab 6-Compulsory + Homework
-
+# Lab 8-Compulsory + Homework
 ## Homework
-## Funcționalități noi 
-- A fost integrată autentificarea și autorizarea cu JWT (JSON Web Tokens)
-- Controlul accesului se realizează pe roluri (ADMIN, STUDENT, INSTRUCTOR).
-- Endpointurile aplicației au fost securizate.
-- Spring Boot Actuator a fost configurat pentru monitorizare.
+## Funcționalități implementate
+- Am creat tabela **InstructorPreference** pentru preferințele instructorilor
+- Am implementat endpoints pentru gestionarea preferințelor instructorilor
+- Am creat **StudentRankingService** pentru calculul scorurilor studenților
+- Am implementat algoritmul de matching bazat pe preferințe (ranked)
+- Am creat algoritmul random pentru matching fără preferințe
+- Am implementat pattern-urile de resilience **Retry** și **Fallback**
+- Am creat **StableMatchClient** pentru invocarea serviciului extern
   
-## Înregistrare/login utilizator (ADMIN)
-<img width="1920" height="460" alt="image" src="https://github.com/user-attachments/assets/1f5bf297-954b-435a-a72e-f6f0e5967d2f" />
+## Testare adăugare preferințe instructor
+<img width="1899" height="204" alt="image" src="https://github.com/user-attachments/assets/ad5f4808-7fe5-4b95-a755-93c8bf78955e" />
+<img width="1870" height="203" alt="image" src="https://github.com/user-attachments/assets/cfc19694-7b80-4573-997f-6df097afe082" />
 
-## GET-cu Token (afișează toți studenții și cursurile)
-<img width="1920" height="440" alt="image" src="https://github.com/user-attachments/assets/78f1da5d-b1aa-48ca-a8fe-2edf911947a0" />
-<img width="1920" height="456" alt="image" src="https://github.com/user-attachments/assets/18e94b71-d00b-4d6e-ae45-7dc6d3b9e022" />
+## Testare calcul scoruri studenți 
+<img width="1473" height="84" alt="image" src="https://github.com/user-attachments/assets/7ff53d97-6498-49d4-a32c-8ebf7e4e1f7a" />
 
-## GET-fără Token (unauthorized)
-<img width="1920" height="80" alt="image" src="https://github.com/user-attachments/assets/f2670087-37e0-4a61-9422-6f6c6210b781" />
+## Testare ranked matching
+<img width="1580" height="82" alt="image" src="https://github.com/user-attachments/assets/6b155709-91cc-49ce-a0fd-7eaba5cdd400" />
 
-## POST (creează o preferință nouă)
-<img width="1920" height="220" alt="image" src="https://github.com/user-attachments/assets/86202c9c-d2e7-49e3-a185-467dabdd97d4" />
-<img width="1619" height="741" alt="image" src="https://github.com/user-attachments/assets/e047c966-9e94-4609-83c4-a0b13c24602d" />
+- Au fost selectați cei mai buni 2 studenți după scor: S001 (8.7) și S003 (7.9)
+- S002 (7.2) a rămas fără loc - capacitate doar 2
 
-## PUT (actualizează ordinea unei preferințe)
-<img width="1917" height="213" alt="image" src="https://github.com/user-attachments/assets/0bba0756-913c-4ac6-8fac-0a806da33966" />
-<img width="1615" height="705" alt="image" src="https://github.com/user-attachments/assets/ae2bd1f0-3512-4707-856b-db86338dae01" />
+## Testare matching cu fallback
+<img width="1577" height="82" alt="image" src="https://github.com/user-attachments/assets/757b032e-296d-4e2d-8421-feda04527c61" />
 
-## Înregistrare/login utilizator (STUDENT)
-<img width="1920" height="188" alt="image" src="https://github.com/user-attachments/assets/97d40a01-1b12-4a76-b770-3326c0b21b12" />
+- A folosit StableMatch service-ul extern care a returnat doar S001.
 
-## DELETE-rol de student (unauthorized)
-<img width="1920" height="305" alt="image" src="https://github.com/user-attachments/assets/f6c278cd-a102-41ca-9562-61ac3c7b9f2b" />
+## Tabelul courses (opțional și compulsory)
+<img width="1534" height="712" alt="image" src="https://github.com/user-attachments/assets/7f61b391-5fb3-4018-9922-4235cab5af9b" />
+
+## Tabelul grades (notele reale ale studenților)
+<img width="1338" height="660" alt="image" src="https://github.com/user-attachments/assets/6b4f920d-7ae6-46e7-89b9-63041c55b685" />
+
 
 ## Compulsory
 ## Funcționalități noi implementate:
-- A fost adăugat Spring Security în proiect.
-- Toate endpointurile API (/students, /preferences, etc.) sunt acum securizate.
-- Doar endpointul /login este accesibil public fără autentificare.
-- A fost creat un mock login endpoint (AuthController) care returnează un mesaj static, simulând autentificarea.
-- Configurația de securitate este realizată în fișierul SecurityConfig, unde s-a definit regula de acces.
+- Am implementat DTO-urile MatchingRequest și MatchingResponse
+- Am creat StableMatchController cu endpoint-ul /api/matching/solve
+- Am implementat StableMatchService cu algoritmul de matching
+- Am adăugat endpoints suplimentare pentru interogarea asignărilor
 
-## Endpoint public (funcționează fără autentificare)
-<img width="1920" height="467" alt="image" src="https://github.com/user-attachments/assets/81e64ebb-7b51-45f4-9eb9-b77f0d792452" />
+## Testare endpoint solve
+<img width="1834" height="142" alt="image" src="https://github.com/user-attachments/assets/7ec5a2fd-4f85-4fb4-baf5-5c784b79f557" />
 
-## Endpoint protejat (necesită autentificare)
-<img width="1920" height="780" alt="image" src="https://github.com/user-attachments/assets/0e3983ba-3105-4df2-803d-2569acbde62f" />
+## Testare endpoints assignments, student, course, stats
+<img width="1765" height="234" alt="image" src="https://github.com/user-attachments/assets/887241a6-9086-448a-be56-d94075584998" />
 
-## Testare endpoint cu parola generată
-<img width="1920" height="1025" alt="image" src="https://github.com/user-attachments/assets/b35807c0-74e7-44c3-81e5-d0b3d9942958" />
-<img width="1920" height="1029" alt="image" src="https://github.com/user-attachments/assets/0858acb8-59eb-4429-887d-f4bf15f3e13c" />
+
 
 
