@@ -92,8 +92,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/actuator/health", "/actuator/info")
-                        .permitAll()
+                        // 🆕 TOATE ENDPOINT-URILE TALE NOI + CELE EXISTENTE
+                        .requestMatchers("/instructor-preferences/**", "/match/**", "/grades/**", "/courses/**").permitAll()
+                        // Și endpoint-urile de auth existente
+                        .requestMatchers("/login", "/register", "/actuator/health", "/actuator/info").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -110,7 +112,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config)

@@ -10,4 +10,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query("SELECT c FROM Course c WHERE c.type = 'optional'")
     List<Course> findAllOptionalCourses();
+
+    Course findByCode(String code);
+
+    Course findByAbbr(String abbr);
 }

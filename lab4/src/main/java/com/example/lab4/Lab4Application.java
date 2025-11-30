@@ -24,13 +24,20 @@ public class Lab4Application {
     public CommandLineRunner demo(StudentRepository studentRepo,
                                   InstructorRepository instructorRepo,
                                   PackRepository packRepo,
-                                  CourseRepository courseRepo) {
+                                  CourseRepository courseRepo,
+                                  GradeRepository gradeRepo) {
         return args -> {
             Faker faker = new Faker();
             Random rand = new Random();
 
-            // --- CREATE ---
-            // 5 studenți random
+            // Șterge datele vechi
+            gradeRepo.deleteAll();
+            courseRepo.deleteAll();
+            studentRepo.deleteAll();
+            instructorRepo.deleteAll();
+            packRepo.deleteAll();
+
+            // --- CREATE STUDENTS ---
             for (int i = 1; i <= 5; i++) {
                 Student s = new Student();
                 s.setCode("S00" + i);
@@ -40,7 +47,9 @@ public class Lab4Application {
                 studentRepo.save(s);
             }
 
-            // Instructori
+            List<Student> students = studentRepo.findAll();
+
+            // --- CREATE INSTRUCTORS ---
             Instructor i1 = new Instructor();
             i1.setName(faker.name().fullName());
             i1.setEmail(faker.internet().emailAddress());
@@ -51,7 +60,12 @@ public class Lab4Application {
             i2.setEmail(faker.internet().emailAddress());
             instructorRepo.save(i2);
 
-            // Pachete
+            Instructor i3 = new Instructor();
+            i3.setName(faker.name().fullName());
+            i3.setEmail(faker.internet().emailAddress());
+            instructorRepo.save(i3);
+
+            // --- CREATE PACKS ---
             Pack p1 = new Pack();
             p1.setName("Optional Pack 1");
             p1.setYear(2);
@@ -64,56 +78,98 @@ public class Lab4Application {
             p2.setSemester(2);
             packRepo.save(p2);
 
-            // Cursuri
-            Course c1 = new Course();
-            c1.setType("optional");
-            c1.setCode("CS201");
-            c1.setAbbr("ALG");
-            c1.setName("Algorithms");
-            c1.setGroupCount(2);
-            c1.setDescription("Algorithms and data structures");
-            c1.setInstructor(i1);
-            c1.setPack(p1);
-            courseRepo.save(c1);
+            // --- CREATE COMPULSORY COURSES ---
+            Course compulsory1 = new Course();
+            compulsory1.setType("compulsory");
+            compulsory1.setCode("CS201");
+            compulsory1.setAbbr("ALG");
+            compulsory1.setName("Algorithms");
+            compulsory1.setGroupCount(2);
+            compulsory1.setDescription("Algorithms and data structures");
+            compulsory1.setInstructor(i1);
+            compulsory1.setPack(p1);
+            courseRepo.save(compulsory1);
 
-            Course c2 = new Course();
-            c2.setType("compulsory");
-            c2.setCode("CS301");
-            c2.setAbbr("DBS");
-            c2.setName("Databases");
-            c2.setGroupCount(1);
-            c2.setDescription("Introduction to SQL and databases");
-            c2.setInstructor(i2);
-            c2.setPack(p2);
-            courseRepo.save(c2);
+            Course compulsory2 = new Course();
+            compulsory2.setType("compulsory");
+            compulsory2.setCode("CS301");
+            compulsory2.setAbbr("DBS");
+            compulsory2.setName("Databases");
+            compulsory2.setGroupCount(1);
+            compulsory2.setDescription("Introduction to SQL and databases");
+            compulsory2.setInstructor(i2);
+            compulsory2.setPack(p2);
+            courseRepo.save(compulsory2);
 
-            System.out.println(" CREATE: Cursurile au fost adăugate în baza de date.");
+            // --- CREATE OPTIONAL COURSES ---
+            Course optional1 = new Course();
+            optional1.setType("optional");
+            optional1.setCode("CS401");
+            optional1.setAbbr("ML");
+            optional1.setName("Machine Learning");
+            optional1.setGroupCount(1);
+            optional1.setDescription("Introduction to Machine Learning");
+            optional1.setInstructor(i3);
+            optional1.setPack(p1);
+            courseRepo.save(optional1);
+
+            Course optional2 = new Course();
+            optional2.setType("optional");
+            optional2.setCode("CS402");
+            optional2.setAbbr("AI");
+            optional2.setName("Artificial Intelligence");
+            optional2.setGroupCount(1);
+            optional2.setDescription("AI fundamentals");
+            optional2.setInstructor(i3);
+            optional2.setPack(p1);
+            courseRepo.save(optional2);
+
+            // --- CREATE GRADES --- folosind studentCode și courseCode
+            for (Student student : students) {
+                // Grade for Algorithms (folosind courseCode "CS201")
+                Grade grade1 = new Grade();
+                grade1.setStudentCode(student.getCode()); // "S001", "S002", etc.
+                grade1.setCourseCode("CS201"); // Codul cursului Algorithms
+                grade1.setGrade(rand.nextInt(5) + 6); // Note între 6-10
+                gradeRepo.save(grade1);
+
+                // Grade for Databases (folosind courseCode "CS301")
+                Grade grade2 = new Grade();
+                grade2.setStudentCode(student.getCode());
+                grade2.setCourseCode("CS301"); // Codul cursului Databases
+                grade2.setGrade(rand.nextInt(5) + 6); // Note între 6-10
+                gradeRepo.save(grade2);
+            }
+
+            System.out.println(" CREATE: Cursurile și notele au fost adăugate în baza de date.");
 
             // --- READ ---
-            System.out.println("\n READ: Lista cursurilor existente în DB:");
+            System.out.println("\n READ: Cursurile existente în DB:");
             List<Course> courses = courseRepo.findAll();
             courses.forEach(c ->
-                    System.out.println(" - " + c.getName() + " (" + c.getCode() + ")")
+                    System.out.println(" - " + c.getName() + " (" + c.getCode() + ") - " + c.getType())
             );
 
-            // --- UPDATE ---
-            if (!courses.isEmpty()) {
-                Course courseToUpdate = courses.get(0);
-                String oldName = courseToUpdate.getName();
-                courseToUpdate.setName(oldName + " [UPDATED]");
-                courseRepo.save(courseToUpdate);
-                System.out.println("\n UPDATE: Cursul '" + oldName + "' a fost actualizat la '" + courseToUpdate.getName() + "'");
-            }
+            // Afișează notele
+            System.out.println("\n READ: Notele studenților:");
+            List<Grade> grades = gradeRepo.findAll();
+            grades.forEach(g ->
+                    System.out.println(" - " + g.getStudentCode() + " la " +
+                            g.getCourseCode() + ": " + g.getGrade())
+            );
 
-            // --- DELETE ---
-            if (courses.size() > 1) {
-                Course courseToDelete = courses.get(1);
-                courseRepo.delete(courseToDelete);
-                System.out.println("\n DELETE: Cursul '" + courseToDelete.getName() + "' a fost șters din DB.");
-            }
+            // Afișează cursurile optionale cu ID-urile lor (important pentru curl commands)
+            System.out.println("\n CURSURI OPTIONALE (pentru preferințe instructor):");
+            courses.stream()
+                    .filter(c -> "optional".equals(c.getType()))
+                    .forEach(c -> System.out.println(" - ID: " + c.getId() + " - " + c.getCode() + " (" + c.getAbbr() + ")"));
 
-            System.out.println("\n Toate operațiile CRUD au fost testate cu succes!");
+            System.out.println("\n CURSURI COMPULSORY (pentru note):");
+            courses.stream()
+                    .filter(c -> "compulsory".equals(c.getType()))
+                    .forEach(c -> System.out.println(" - " + c.getCode() + " (" + c.getAbbr() + ")"));
+
+            System.out.println("\n Toate operațiunile CRUD au fost finalizate cu succes!");
         };
     }
 }
-

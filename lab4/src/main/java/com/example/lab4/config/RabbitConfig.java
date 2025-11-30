@@ -1,31 +1,39 @@
 package com.example.lab4.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
 
-    public static final String QUEUE = "grade.queue";
-    public static final String EXCHANGE = "grade.exchange";
-    public static final String ROUTING_KEY = "grade.key";
+    // Folosește nume complet noi pentru a evita orice conflict
+    public static final String QUEUE = "final.grade.queue";
+    public static final String DLQ = "final.grade.queue.dlq";
+    public static final String EXCHANGE = "final.grade.exchange";
+    public static final String ROUTING_KEY = "final.grade.key";
 
+    // Coada principală cu DLQ
     @Bean
     public Queue queue() {
-        return new Queue(QUEUE, true);
+        return QueueBuilder.durable(QUEUE)
+                .withArgument("x-dead-letter-exchange", "")
+                .withArgument("x-dead-letter-routing-key", DLQ)
+                .build();
+    }
+
+    // DLQ ca @Bean
+    @Bean
+    public Queue dlq() {
+        return QueueBuilder.durable(DLQ).build();
     }
 
     @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(EXCHANGE);
+    public DirectExchange exchange() {
+        return new DirectExchange(EXCHANGE);
     }
 
     @Bean
